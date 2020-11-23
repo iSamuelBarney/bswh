@@ -4,12 +4,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as Screens from '@@Screens';
 import {PersistGate} from 'redux-persist/integration/react';
-import redux from '@@Redux';
+import Store from '@@Store';
 import {Provider} from 'react-redux';
 
 const Stack = createStackNavigator();
 
-const {store, persistor} = redux();
+const {store, persistor} = Store();
 
 function App() {
   return (
@@ -18,7 +18,11 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Users" component={Screens.Users} />
-            <Stack.Screen name="User" component={Screens.User} />
+            <Stack.Screen
+              name="User"
+              options={({route}) => ({title: route?.params?.name})}
+              component={Screens.User}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
